@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	viperInit "github.com/spf13/viper"
 	"hy_heymate/api/route"
+	"hy_heymate/common/cron"
 	"hy_heymate/common/logger"
 	"hy_heymate/config/viper"
 	"hy_heymate/database"
@@ -31,6 +32,9 @@ func main() {
 	database.ConnectToRedis()
 
 	route.LoadRouters(r)
+
+	// 定时
+	cron.Cron()
 
 	r.Run(":" + viperInit.GetString("server.port"))
 
